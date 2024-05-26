@@ -6,3 +6,30 @@
 .card-img-top{
     height: 15rem;
 }
+
+.carrito{
+    position: fixed;
+    z-index: 1;
+}
+#carritoProductos{
+    overflow-y: scroll;
+}
+
+.cProductos{
+    margin: .5rem;
+}
+
+#name, #number{
+    margin: 1rem;
+}
+
+.productos{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.card{
+    width: 20rem;
+    margin: 1rem 0;
+}

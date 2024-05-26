@@ -2,8 +2,12 @@ const Div = document.getElementById('productos')
 const Cantidad = document.querySelector(".cantidad")
 const Total = document.querySelector(".total")
 const Comprar = document.getElementById("comprar")
-const nombre = document.getElementById("nombre")
-const tel = document.getElementById("cel")
+const nombre = document.getElementById("name")
+const tel = document.getElementById("number")
+const Card = document.getElementById("card")
+const carritoProductos = document.getElementById("carritoProductos")
+const ArrUrl = []
+
 
 datosLocalStorage = localStorage.getItem("compra");
 
@@ -24,7 +28,7 @@ productosTecnologicos.forEach(e =>{
   const Tarjeta = document.createElement('div')
   e.n = 0
   Tarjeta.innerHTML = `
-    <div class="card" style="width: 20rem;">
+    <div class="card">
         <img src="${e.imagen}" class="card-img-top" alt="productos">
         <div class="card-body">
             <h5 class="card-title">${e.nombre}</h5>
@@ -35,7 +39,7 @@ productosTecnologicos.forEach(e =>{
             <p class="btn btn-primary"> U$D ${e.precio}</p>
             <p class="btn btn-primary"> Stock ${e.cantidad}/U</p>
         </div>
-    </div>`;
+    </div>`
 
    
     
@@ -59,10 +63,43 @@ productosTecnologicos.forEach(e =>{
       Cantidad.textContent = `Cantidad de Productos : ${productos}`
       Total.textContent = `Total : U$D ${total}`
 
+//estas linea agrega al carrito los nombres y las cantidades de los productos
+
+      ArrUrl.push(e.nombre)
+
+      function contarElementosIguales(array) {
+        const contador = {};
+      
+        for (const elemento of array) {
+          if (contador[elemento]) {
+            contador[elemento]++;
+          } else {
+            contador[elemento] = 1;
+          }
+        }
+      
+        return contador;
+      }
+
+      const conteo = contarElementosIguales(ArrUrl);
+
+      let listaHTML = ""
+
+      for (const elemento in conteo) {
+        const cantidad = conteo[elemento];
+        const elementoLI = `<ul><li>${elemento}: ${cantidad}</li></ul>`;
+        listaHTML += elementoLI;
+      }
+      
+      carritoProductos.innerHTML = `<div>${listaHTML}</div>`
+
+      Card.appendChild(carritoProductos)
+
+//se guarda en el local storage la lista con los productos comprados
       localStorage.setItem("compra", JSON.stringify(productosTecnologicos))
 
     } else if (el.target.textContent == "-" && el.target.previousElementSibling.textContent > 0 ) {
-      e.n -= 1;
+      e.n -= 1; productos 
       e.cantidad +=1
       productos -= 1
       total -= e.precio
@@ -85,8 +122,15 @@ productosTecnologicos.forEach(e =>{
 
 
 Comprar.addEventListener("click", function () {
-  alert(`Hola ${nombre.value} el Total a Pagar es: U$D ${total}, la factura sera enviada al Numero: ${tel.value}`)
 
+  Swal.fire({
+    position: "top-end",
+    icon: "success",
+    title: `${nombre.value} Gracias por tu Compra`,
+    text: `Tu monto a pagar es: U$D ${total} 
+    Tu factura sera enviada al Numero: ${tel.value}`,
+    showConfirmButton: true
+  });
   nombre.value = ""
   tel.value = ""
 })
