@@ -66,6 +66,7 @@ productosTecnologicos.forEach(e =>{
 //estas linea agrega al carrito los nombres y las cantidades de los productos
 
       ArrUrl.push(e.nombre)
+      const conteo = contarElementosIguales(ArrUrl);
 
       function contarElementosIguales(array) {
         const contador = {};
@@ -81,7 +82,6 @@ productosTecnologicos.forEach(e =>{
         return contador;
       }
 
-      const conteo = contarElementosIguales(ArrUrl);
 
       let listaHTML = ""
 
@@ -109,6 +109,55 @@ productosTecnologicos.forEach(e =>{
 
       Cantidad.textContent = `Cantidad de Productos : ${productos}`
       Total.textContent = `Total : U$D ${total}`
+
+//estas linea quita al carrito los nombres y las cantidades de los productos
+
+      const nombreAEliminar = e.nombre;
+      let indiceElemento = -1;
+      const conteo = contarElementosIguales(ArrUrl);
+
+      function contarElementosIguales(array) {
+        const contador = {};
+      
+        for (const elemento of array) {
+          if (contador[elemento]) {
+            contador[elemento]++;
+          } else {
+            contador[elemento] = 1;
+          }
+        }
+      
+        return contador;
+      }
+      
+
+      ArrUrl.forEach((elemento, indice) => {
+        if (elemento === nombreAEliminar) {
+          indiceElemento = indice;
+          return;
+        }
+      });
+
+      if (indiceElemento !== -1) {
+        ArrUrl.splice(indiceElemento, 1);
+
+        if (conteo[nombreAEliminar]) {
+          conteo[nombreAEliminar]--;
+        }
+
+        let listaHTML = "";
+
+        for (const elemento in conteo) {
+          const cantidad = conteo[elemento];
+          const elementoLI = `<ul><li>${elemento}: ${cantidad}</li></ul>`;
+          listaHTML += elementoLI;
+        }
+
+        carritoProductos.innerHTML = `<div>${listaHTML}</div>`
+
+        Card.appendChild(carritoProductos)
+        
+      }
 
       localStorage.setItem("compra", JSON.stringify(productosTecnologicos));
 
