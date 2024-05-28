@@ -7,7 +7,16 @@ const tel = document.getElementById("number")
 const Card = document.getElementById("card")
 const carritoProductos = document.getElementById("carritoProductos")
 const ArrUrl = []
+const load = document.querySelector(".load")
+const mercado = document.querySelector(".mercado")
 
+
+function loading(){
+  load.style.display = "none"
+  mercado.style.display = "block"
+}
+
+setTimeout(loading, "2500")
 
 datosLocalStorage = localStorage.getItem("compra");
 
@@ -41,7 +50,6 @@ productosTecnologicos.forEach(e =>{
         </div>
     </div>`
 
-   
     
   Div.appendChild(Tarjeta)
 
@@ -173,7 +181,7 @@ productosTecnologicos.forEach(e =>{
 Comprar.addEventListener("click", function () {
 
   Swal.fire({
-    position: "top-end",
+    position: "center",
     icon: "success",
     title: `${nombre.value} Gracias por tu Compra`,
     text: `Tu monto a pagar es: U$D ${total} 

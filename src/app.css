@@ -1,10 +1,49 @@
 *{
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+.load{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.span-load{
+    margin: 3rem;
+    font-size: 5rem;
+}
+
+body{
+    background-color: black;
+}
+
+.mercado{
+    display: none;
+}
+
+h1{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    text-align: center;
+    color: aquamarine;
+    background-color: black;
+    font-size: 3rem;
+    position: sticky;
+    top: 1rem;
+    z-index: 1;
 }
 
 .card-img-top{
+    border-radius: 1rem 1rem 0 0;
     height: 15rem;
+}
+
+.card-body{
+    background-color: rgb(16, 17, 17);
+    border-radius: 0 0 1rem 1rem;
+    color: white;
 }
 
 .carrito{
@@ -30,6 +69,7 @@
 }
 
 .card{
+    border-radius: 1rem;
     width: 20rem;
     margin: 1rem 0;
 }
