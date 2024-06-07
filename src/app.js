@@ -53,60 +53,67 @@ productosTecnologicos.forEach(e =>{
     
   Div.appendChild(Tarjeta)
 
+const agregarCarrito = function (el) {
+
+  if (el.target.textContent == "+" && e.cantidad > 0) {
+    e.n += 1
+    e.cantidad -= 1
+    productos += 1
+    total += e.precio
+
+    el.target.nextElementSibling.textContent = e.n;
+    el.target.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.textContent = `Stock ${e.cantidad}/U`
+
+    Cantidad.textContent = `Cantidad de Productos : ${productos}`
+    Total.textContent = `Total : U$D ${total}`
+
+//estas linea agrega al carrito los nombres y las cantidades de los productos
+
+    ArrUrl.push(e.nombre)
+    const conteo = contarElementosIguales(ArrUrl);
+
+    function contarElementosIguales(array) {
+      const contador = {};
+    
+      for (const elemento of array) {
+        if (contador[elemento]) {
+          contador[elemento]++;
+        } else {
+          contador[elemento] = 1;
+        }
+      }
+    
+      return contador;
+    }
+
+
+    let listaHTML = ""
+
+    for (const elemento in conteo) {
+      const cantidad = conteo[elemento];
+      const elementoLI = `<ul><li>${elemento}: ${cantidad}</li></ul>`;
+      listaHTML += elementoLI;
+    }
+    
+    carritoProductos.innerHTML = `<div>${listaHTML}</div>`
+
+    Card.appendChild(carritoProductos)
+
+//se guarda en el local storage la lista con los productos comprados
+    localStorage.setItem("compra", JSON.stringify(productosTecnologicos))
+    
+  }
+}
+
 
   Tarjeta.addEventListener("click", function (el) {
     
     el.preventDefault()
 
     
-    if (el.target.textContent == "+" && e.cantidad > 0) {
-      e.n += 1
-      e.cantidad -= 1
-      productos += 1
-      total += e.precio
+    agregarCarrito(el)
 
-      el.target.nextElementSibling.textContent = e.n;
-      el.target.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.textContent = `Stock ${e.cantidad}/U`
-
-      Cantidad.textContent = `Cantidad de Productos : ${productos}`
-      Total.textContent = `Total : U$D ${total}`
-
-//estas linea agrega al carrito los nombres y las cantidades de los productos
-
-      ArrUrl.push(e.nombre)
-      const conteo = contarElementosIguales(ArrUrl);
-
-      function contarElementosIguales(array) {
-        const contador = {};
-      
-        for (const elemento of array) {
-          if (contador[elemento]) {
-            contador[elemento]++;
-          } else {
-            contador[elemento] = 1;
-          }
-        }
-      
-        return contador;
-      }
-
-
-      let listaHTML = ""
-
-      for (const elemento in conteo) {
-        const cantidad = conteo[elemento];
-        const elementoLI = `<ul><li>${elemento}: ${cantidad}</li></ul>`;
-        listaHTML += elementoLI;
-      }
-      
-      carritoProductos.innerHTML = `<div>${listaHTML}</div>`
-
-      Card.appendChild(carritoProductos)
-
-//se guarda en el local storage la lista con los productos comprados
-      localStorage.setItem("compra", JSON.stringify(productosTecnologicos))
-
-    } else if (el.target.textContent == "-" && el.target.previousElementSibling.textContent > 0 ) {
+    if (el.target.textContent == "-" && el.target.previousElementSibling.textContent > 0 ) {
       e.n -= 1; productos 
       e.cantidad +=1
       productos -= 1
